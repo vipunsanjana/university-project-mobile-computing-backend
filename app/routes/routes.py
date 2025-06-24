@@ -2,7 +2,13 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 
 from app.models.sheet_data import DegreeProgram, RecommendationResponse, StudentInput
-from app.services.sheet_service import fetch_degrees_from_google_sheets, generate_nearby_recommendations, generate_recommendations, get_all_districts_from_sheet, get_all_sheet_names
+from app.services.sheet_service import (
+    fetch_degrees_from_google_sheets,
+    generate_nearby_recommendations,
+    generate_recommendations,
+    get_all_districts_from_sheet,
+    get_all_sheet_names
+)
 from app.utils.constants import DISTRICT_PROXIMITY
 
 
