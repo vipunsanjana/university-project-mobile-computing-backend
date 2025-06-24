@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+*.sqlite3
+
+# Logs
+*.log
+*.out
+
+# Git
+.git
+.gitignore
+
+# Node (if frontend included)
+node_modules/
+dist/
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Docker files itself
+Dockerfile
+docker-compose.yml

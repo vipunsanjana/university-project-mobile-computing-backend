@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+requests
+python-dotenv
+httpx
+pandas
+oauth2client
