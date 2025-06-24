@@ -26,7 +26,7 @@ A high-performance backend API that helps Sri Lankan A/L students discover unive
 ## 👨‍💻 Developer
 **Vipun Sajana**  
 Intern Software Engineer  
-SO2 Cloud Security Operations Center  
+WSO2 Cloud Security Operations Center  
 
 ## 🛠 Technologies Used
 - **Core Framework**: FastAPI 0.110+
