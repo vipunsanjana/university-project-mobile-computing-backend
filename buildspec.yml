@@ -1,0 +1,39 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /University-Project/docker/username
+    DOCKER_REGISTRY_PASSWORD: /University-Project/docker/password
+    DOCKER_REGISTRY_URL: /University-Project/docker/registry
+  variables:
+    IMAGE_NAME: university-project
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+
+  pre_build:
+    commands:
+      - echo "Installing Python dependencies..."
+      - pip install -r requirements.txt
+      - echo "Logging in to Docker registry..."
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - echo "DOCKER_REGISTRY_URL=$DOCKER_REGISTRY_URL"
+      - echo "DOCKER_REGISTRY_USERNAME=$DOCKER_REGISTRY_USERNAME"
+      - echo "IMAGE_NAME=$IMAGE_NAME"
+
+  build:
+    commands:
+      - echo "Building Docker image..."
+      - docker build -t $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/$IMAGE_NAME:latest .
+      - echo "Pushing Docker image..."
+      - docker push $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/$IMAGE_NAME:latest
+
+  post_build:
+    commands:
+      - echo "Build and Docker push completed successfully!"
+
+artifacts:
+  files:
+    - '**/*'
