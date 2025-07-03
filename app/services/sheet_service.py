@@ -80,6 +80,10 @@ def get_all_districts_from_sheet(sheet_number: int = 0) -> List[str]:
         raise
 
 async def fetch_degrees_from_google_sheets(sheet_number: int = 0) -> List[DegreeProgram]:
+    """
+    Fetches degree programs from the specified Google Sheet and returns a list of DegreeProgram objects.
+    param sheet_number: Index of the sheet to fetch data from (0 for Bio Science, 1 for Physical Science, 2 for Technology).
+    """
     try:
         sheet = initialize_google_sheet(sheet_number)
         data = sheet.get_all_values()
@@ -144,6 +148,12 @@ async def fetch_degrees_from_google_sheets(sheet_number: int = 0) -> List[Degree
         raise
 
 async def generate_recommendations(student_input: StudentInput) -> RecommendationResponse:
+    """
+    Generates degree recommendations based on the student's input.
+    Filters degrees based on subject stream, district, and Z-score.
+    param student_input: The input data provided by the student.
+    Returns a RecommendationResponse containing eligible degrees.
+    """
 
     sheet_number = 0
     if student_input.subject_stream == "Bio Science":
@@ -169,6 +179,12 @@ async def generate_recommendations(student_input: StudentInput) -> Recommendatio
     )
 
 async def generate_nearby_recommendations(student_input: StudentInput) -> dict:
+    """
+    Generates degree recommendations for the student's district and nearby districts.
+    Filters degrees based on subject stream, district, and Z-score.
+    param student_input: The input data provided by the student.
+    Returns a dictionary containing eligible degrees in the primary district and nearby districts.
+    """
 
     sheet_number = 0
     if student_input.subject_stream == "Bio Science":

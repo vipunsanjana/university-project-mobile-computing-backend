@@ -14,15 +14,18 @@ from app.utils.constants import DISTRICT_PROXIMITY
 
 router = APIRouter()
 
+# Root endpoint to check if the API is up
 @router.get("/", tags=["General"])
 async def root():
     return {"message": "University Degree Recommendation API"}
 
+# Get all degree programs from Google Sheets
 @router.get("/degrees", response_model=List[DegreeProgram], tags=["Degrees"])
 async def get_all_degrees():
     degrees = await fetch_degrees_from_google_sheets()
     return degrees
 
+# Get all available subject streams (sheet names)
 @router.get("/streams", tags=["Filters"])
 async def get_subject_streams():
     try:
@@ -31,6 +34,7 @@ async def get_subject_streams():
     except Exception as e:
         return {"error": str(e)}
 
+# Get all available districts from the sheet
 @router.get("/districts", tags=["Filters"])
 async def get_districts():
     try:
@@ -39,6 +43,7 @@ async def get_districts():
     except Exception as e:
         return {"error": str(e)}
 
+# Generate degree recommendations based on student's input
 @router.post("/recommend", response_model=RecommendationResponse, tags=["Recommendation"])
 async def get_recommendations(student_input: StudentInput):
     try:
@@ -46,10 +51,10 @@ async def get_recommendations(student_input: StudentInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating recommendations: {str(e)}")
 
+# Generate nearby district recommendations based on student's input
 @router.post("/recommend-nearby", tags=["Recommendation"])
 async def get_nearby_recommendations(student_input: StudentInput):
     try:
         return await generate_nearby_recommendations(student_input)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating nearby recommendations: {str(e)}")
-    
